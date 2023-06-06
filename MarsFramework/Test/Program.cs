@@ -9,7 +9,7 @@ namespace MarsFramework
     //[TestFixture(BrowserType.Firefox)]
     [TestFixture(BrowserType.Chrome)]
     [Parallelizable(ParallelScope.Fixtures)]
-    [Category("Sprint1")]
+    [Category("Sprint3")]
     public class Program : Base
 
     {
@@ -27,7 +27,17 @@ namespace MarsFramework
             obj.AddNewSkill();
 
         }
-    
+        [Test]
+        public void EditUserProfile()
+        {
+
+            //Create Extent Report
+            test = extent.StartTest("Profile");
+            // Create Share Skills      
+            Profile obj = new Profile(_driver);
+            obj.EditProfile();
+
+        }
 
     }
 }
