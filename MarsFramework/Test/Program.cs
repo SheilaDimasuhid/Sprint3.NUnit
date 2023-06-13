@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 
 
-namespace MarsFramework
+namespace MarsFramework.Test
 {
     //[TestFixture(BrowserType.Firefox)]
     [TestFixture(BrowserType.Chrome)]
@@ -27,17 +27,7 @@ namespace MarsFramework
             obj.AddNewSkill();
 
         }
-        [Test]
-        public void EditUserProfile()
-        {
-
-            //Create Extent Report
-            test = extent.StartTest("Profile");
-            // Create Share Skills      
-            Profile obj = new Profile(_driver);
-            obj.EditProfile();
-
-        }
+        
 
     }
 }

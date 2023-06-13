@@ -216,7 +216,7 @@ namespace MarsFramework.Pages
 
 
             #region Enter Title 
-            Title.WaitForElementClickable(_driver, 120);
+            Title.WaitForElementClickable(_driver, 500);
             //Enter the data in Title textbox
             Title.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Title"));
 

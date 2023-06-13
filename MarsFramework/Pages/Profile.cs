@@ -10,6 +10,7 @@ using System.Threading;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
+using System.Reflection.Emit;
 
 namespace MarsFramework
 {
@@ -44,49 +45,45 @@ namespace MarsFramework
         [FindsBy(How = How.XPath, Using = "//DIV[@class='title']")]
         private IWebElement FullName { get; set; }
 
+
         //Click on Edit Availability Time 
         [FindsBy(How = How.XPath, Using = "(//I[@class='right floated outline small write icon'])[1]")]
-        private IWebElement AvailabilityTime { get; set; }
-
-        ////Click on Availability Time dropdown
-        //[FindsBy(How = How.XPath, Using = "//SELECT[@class='ui right labeled dropdown']")]
-        //private IWebElement AvailabilityTime { get; set; }
-
+        private IWebElement EditAvailabilityTime { get; set; }
+                
         //Click on Availability Time option
         [FindsBy(How = How.XPath, Using = "//SELECT[@class='ui right labeled dropdown']")]
         private IWebElement AvailabilityTimeOpt { get; set; }
 
+        //Current Availability Time
+        [FindsBy(How = How.XPath, Using = "(//SPAN)[10]")]
+        private IWebElement CurrentAvailability { get; set; }
+       
+
         //Click on Edit Availability Hour 
         [FindsBy(How = How.XPath, Using = "(//I[@class='right floated outline small write icon'])[2]")]
-        private IWebElement AvailabilityHours { get; set; }
+        private IWebElement EditAvailabilityHours { get; set; }
 
         //Click on Availability Hour dropdown
         [FindsBy(How = How.XPath, Using = "//SELECT[@class='ui right labeled dropdown']")]
         private IWebElement AvailabilityHoursOpt { get; set; }
 
-        //Click on salary
-        [FindsBy(How = How.XPath, Using = "(//I[@class='right floated outline small write icon'])[3]")]
-        private IWebElement Salary { get; set; }
+        //Current Availability Hours
+        [FindsBy(How = How.XPath, Using = "(//SPAN)[12]")]
+        private IWebElement CurrentHours { get; set; }
 
-        //Click on salary
+       
+        //Click on edit Earn Target
+        [FindsBy(How = How.XPath, Using = "(//I[@class='right floated outline small write icon'])[3]")]
+        private IWebElement EditSalary { get; set; }
+
+        //Click on salary option
         [FindsBy(How = How.XPath, Using = "//SELECT[@class='ui right labeled dropdown']")]
         private IWebElement SalaryOpt { get; set; }
 
-        //Click on Location
-        [FindsBy(How = How.XPath, Using = "//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[2]/div/div[2]/div")]
-        private IWebElement Location { get; set; }
+        //Current Earn Target Value
+        [FindsBy(How = How.XPath, Using = "(//SPAN)[14]")]
+        private IWebElement CurrentSalaryValue { get; set; }
 
-        //Choose Location
-        [FindsBy(How = How.XPath, Using = "//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[2]/div/div[2]/div/div[2]")]
-        private IWebElement LocationOpt { get; set; }
-
-        //Click on City
-        [FindsBy(How = How.XPath, Using = "//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[2]/div/div[3]/div")]
-        private IWebElement City { get; set; }
-
-        //Choose City
-        [FindsBy(How = How.XPath, Using = "//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[2]/div/div[3]/div/div[2]")]
-        private IWebElement CityOpt { get; set; }
 
         //Click on Add new to add new Language
         [FindsBy(How = How.XPath, Using = "//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[3]/div/div[2]/div/table/thead/tr/th[3]/div")]
@@ -199,10 +196,10 @@ namespace MarsFramework
         //Click on Save Button
         [FindsBy(How = How.XPath, Using = "//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[8]/div/div[4]/span/button[1]")]
         private IWebElement Save { get; set; }
-        
+
         #endregion
 
-        internal void EditProfile()
+        public void EditFullName()
         {
 
             //Populate the Excel Sheet
@@ -220,167 +217,154 @@ namespace MarsFramework
 
             SaveFullName.Click();
 
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
 
             if (FullName.Text == GlobalDefinitions.ExcelLib.ReadData(2, "FullName"))
-            { 
+            {
                 //Base.test.Log(LogStatus.Info, "Full Name updated Successfully");
-                Global.Base.test.Log(RelevantCodes.ExtentReports.LogStatus.Pass, "Full Name updated Successfully");
+                Base.test.Log(RelevantCodes.ExtentReports.LogStatus.Pass, "Full Name updated Successfully");
             }
             else
             {
-                Global.Base.test.Log(RelevantCodes.ExtentReports.LogStatus.Fail, "Full Name Not Updated");
+                Base.test.Log(RelevantCodes.ExtentReports.LogStatus.Fail, "Full Name Not Updated");
             }
-
-
-
-
-    /*
-    //Availability Time option
-    Thread.Sleep(1500);
-    Actions action = new Actions(_driver);
-    action.MoveToElement(AvailabilityTime).Build().Perform();
-    Thread.Sleep(1000);
-    IList<IWebElement> AvailableTime = AvailabilityTimeOpt.FindElements(By.TagName("div"));
-    int count = AvailableTime.Count;
-    for (int i = 0; i < count; i++)
-    {
-        if (AvailableTime[i].Text == GlobalDefinitions.ExcelLib.ReadData(2, "AvailableTime"))
-        {
-            AvailableTime[i].Click();
-            Base.test.Log(LogStatus.Info, "Select the available time");
-
         }
-    }
 
-    //Availability Hours
-    AvailabilityHours.Click();
-    //Availability Hours option
-    AvailabilityHours.SendKeys(Keys.ArrowDown);
-    AvailabilityHours.SendKeys(Keys.Enter);
-
-    //Salary 
-    Salary.Click();
-    //Choose the option from salary dropdown
-    Salary.SendKeys(Keys.ArrowDown);
-    Thread.Sleep(500);
-    Salary.SendKeys(Keys.Enter);
-
-    //Choose Location
-    Thread.Sleep(1000);
-    action.MoveToElement(Location).Build().Perform();
-    Thread.Sleep(1000);
-    IList<IWebElement> LocCountry = LocationOpt.FindElements(By.TagName("div"));
-    int countrycount = LocCountry.Count;
-    for (int i = 0; i < countrycount; i++)
-    {
-        if (LocCountry[i].Text == GlobalDefinitions.ExcelLib.ReadData(2, "Country"))
+        public void SelectAvailability(string availability)
         {
-            LocCountry[i].Click();
-            Base.test.Log(LogStatus.Info, "Selected Country");
-        }
-    }
+            //Availability Time option
+            Thread.Sleep(1500);
 
-    //Choose City
-    Thread.Sleep(1000);
-    action.MoveToElement(City).Build().Perform();
-    Thread.Sleep(1000);
-    IList<IWebElement> LocCity = CityOpt.FindElements(By.TagName("div"));
-    int citycount = LocCity.Count;
-    for (int i = 0; i < citycount; i++)
-    {
-        if (LocCity[i].Text == GlobalDefinitions.ExcelLib.ReadData(2, "City"))
+            EditAvailabilityTime.Click();
+            Thread.Sleep(500);
+            SelectElement selectAvailability = new SelectElement(AvailabilityTimeOpt);
+            selectAvailability.SelectByText(availability);     
+        }
+
+        public string GetAvailabilityValue()
         {
-            LocCity[i].Click();
-            Base.test.Log(LogStatus.Info, "Selected City");
+            string availability = CurrentAvailability.Text;
+            return availability;
         }
-    }
-    */
 
-    /*
-                //---------------------------------------------------------
-                //Click on Add New Language button
-                AddNewLangBtn.Click();
-                Thread.Sleep(1000);
-                //Enter the Language
-                AddLangText.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Language"));
+        public void SelectHours(string hours)
+        {
+            //Availability Time option
+            Thread.Sleep(1500);
 
-                //Choose Lang
-                ChooseLang.Click();
-                Thread.Sleep(1000);
-                ChooseLangOpt.Click();
-                Thread.Sleep(500);
-                AddLang.Click();
-                Base.test.Log(LogStatus.Info, "Added Language successfully");
+            EditAvailabilityHours.Click();
+            Thread.Sleep(500);
+            SelectElement selectHours = new SelectElement(AvailabilityHoursOpt);
+            selectHours.SelectByText(hours);
+        }
 
-                //-----------------------------------------------------------
-                //Click on Add New Skill Button
-                AddNewSkillBtn.Click();
-                //Enter the skill 
-                AddSkillText.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Skill"));
+        public string GetHoursValue()
+        {
+            string hoursValue = CurrentHours.Text;
+            return hoursValue;
+        }
 
-                //Click the skill dropdown
-                ChooseSkill.Click();
-                Thread.Sleep(500);
-                ChooseSkilllevel.Click();
-                AddSkill.Click();
-                Thread.Sleep(500);
-                Base.test.Log(LogStatus.Info, "Added Skills successfully");
+        public void EarnTarget(string salary)
+        {
+            //Availability Time option
+            Thread.Sleep(1500);
 
-                //---------------------------------------------------------
-                //Add Education
-                AddNewEducation.Click();
-                //Enter the University
-                EnterUniversity.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "University"));
+            EditSalary.Click();
+            Thread.Sleep(500);
+            SelectElement salaryValue = new SelectElement(SalaryOpt);
+            salaryValue.SelectByText(salary);
+        }
 
-                //Choose Country
-                ChooseCountry.Click();
-                Thread.Sleep(500);
-                //Choose Country Level
-                ChooseCountryOpt.Click();
+        public string GetEarnTargetValue()
+        {
+            string salaryValue = CurrentSalaryValue.Text;
+            return salaryValue;
+        }
 
-                //Choose Title
-                ChooseTitle.Click();
-                Thread.Sleep(500);
-                ChooseTitleOpt.Click();
+        /*
+                    //---------------------------------------------------------
+                    //Click on Add New Language button
+                    AddNewLangBtn.Click();
+                    Thread.Sleep(1000);
+                    //Enter the Language
+                    AddLangText.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Language"));
 
-                //Enter Degree
-                Degree.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Degree"));
+                    //Choose Lang
+                    ChooseLang.Click();
+                    Thread.Sleep(1000);
+                    ChooseLangOpt.Click();
+                    Thread.Sleep(500);
+                    AddLang.Click();
+                    Base.test.Log(LogStatus.Info, "Added Language successfully");
 
-                //Year of Graduation
-                DegreeYear.Click();
-                Thread.Sleep(500);
-                DegreeYearOpt.Click();
-                AddEdu.Click();
-                Thread.Sleep(500);
-                Base.test.Log(LogStatus.Info, "Added Education successfully");
+                    //-----------------------------------------------------------
+                    //Click on Add New Skill Button
+                    AddNewSkillBtn.Click();
+                    //Enter the skill 
+                    AddSkillText.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Skill"));
 
-                //-------------------------------------------------
-                //Add new Certificate
-                AddNewCerti.Click();
+                    //Click the skill dropdown
+                    ChooseSkill.Click();
+                    Thread.Sleep(500);
+                    ChooseSkilllevel.Click();
+                    AddSkill.Click();
+                    Thread.Sleep(500);
+                    Base.test.Log(LogStatus.Info, "Added Skills successfully");
 
-                //Enter Certificate Name
-                EnterCerti.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Certificate"));
+                    //---------------------------------------------------------
+                    //Add Education
+                    AddNewEducation.Click();
+                    //Enter the University
+                    EnterUniversity.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "University"));
 
-                //Enter Certified from
-                CertiFrom.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "CertifiedFrom"));
+                    //Choose Country
+                    ChooseCountry.Click();
+                    Thread.Sleep(500);
+                    //Choose Country Level
+                    ChooseCountryOpt.Click();
 
-                //Enter the Year
-                CertiYear.Click();
-                Thread.Sleep(500);
-                CertiYearOpt.Click();
-                AddCerti.Click();
-                Thread.Sleep(500);
-                Base.test.Log(LogStatus.Info, "Added Certificate successfully");
+                    //Choose Title
+                    ChooseTitle.Click();
+                    Thread.Sleep(500);
+                    ChooseTitleOpt.Click();
 
-                //-----------------------------------------------------
-                //Add Description
-                Description.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Description"));
-                Thread.Sleep(500);
-                Save.Click();
-                Base.test.Log(LogStatus.Info, "Added Description successfully");
-    */
+                    //Enter Degree
+                    Degree.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Degree"));
 
-}
+                    //Year of Graduation
+                    DegreeYear.Click();
+                    Thread.Sleep(500);
+                    DegreeYearOpt.Click();
+                    AddEdu.Click();
+                    Thread.Sleep(500);
+                    Base.test.Log(LogStatus.Info, "Added Education successfully");
+
+                    //-------------------------------------------------
+                    //Add new Certificate
+                    AddNewCerti.Click();
+
+                    //Enter Certificate Name
+                    EnterCerti.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Certificate"));
+
+                    //Enter Certified from
+                    CertiFrom.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "CertifiedFrom"));
+
+                    //Enter the Year
+                    CertiYear.Click();
+                    Thread.Sleep(500);
+                    CertiYearOpt.Click();
+                    AddCerti.Click();
+                    Thread.Sleep(500);
+                    Base.test.Log(LogStatus.Info, "Added Certificate successfully");
+
+                    //-----------------------------------------------------
+                    //Add Description
+                    Description.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Description"));
+                    Thread.Sleep(500);
+                    Save.Click();
+                    Base.test.Log(LogStatus.Info, "Added Description successfully");
+        */
+
+
     }
 }
