@@ -83,6 +83,23 @@ namespace MarsFramework
         //Current Earn Target Value
         [FindsBy(How = How.XPath, Using = "(//SPAN)[14]")]
         private IWebElement CurrentSalaryValue { get; set; }
+        
+
+        //Click Edit Description
+        [FindsBy(How = How.XPath, Using = "(//I[@class='outline write icon'])[1]")]
+        private IWebElement EditProfileDescription { get; set; }
+
+        //Enter Description Textarea
+        [FindsBy(How = How.XPath, Using = "//TEXTAREA[@name='value']")]
+        private IWebElement DescriptionTextArea { get; set; }
+
+        //Click Save Description
+        [FindsBy(How = How.XPath, Using = "(//BUTTON[@class='ui teal button'][text()='Save'])[2]")]
+        private IWebElement SaveDescription { get; set; }
+        
+        //Current Profile Description
+        [FindsBy(How = How.XPath, Using = "(//SPAN)[16]")]
+        private IWebElement CurrentDescription { get; set; }
 
 
         //Click on Add new to add new Language
@@ -197,6 +214,12 @@ namespace MarsFramework
         [FindsBy(How = How.XPath, Using = "//*[@id='account-profileEdit-section']/div/section[2]/div/div/div/form/div[8]/div/div[4]/span/button[1]")]
         private IWebElement Save { get; set; }
 
+        //Display notification message
+        [FindsBy(How = How.XPath, Using = "//div[@class=\"ns-box-inner\"]")]
+        private IWebElement NotificationMsssage { get; set; }
+
+        private string notificationMessage;
+
         #endregion
 
         public void EditFullName()
@@ -279,6 +302,31 @@ namespace MarsFramework
         {
             string salaryValue = CurrentSalaryValue.Text;
             return salaryValue;
+        }
+
+        public void AddDescription(string description)
+        {
+            Thread.Sleep(500);
+            EditProfileDescription.Click();
+            Thread.Sleep(1000);
+
+            DescriptionTextArea.Clear();
+            Thread.Sleep(1000);
+            DescriptionTextArea.SendKeys(description);
+            Thread.Sleep(1000);
+            SaveDescription.Click();
+
+            notificationMessage = NotificationMsssage.Text;
+        }
+
+        public string GetDescriptionValue()
+        {
+            return CurrentDescription.Text;
+        }
+
+        public string GetNotificationMessage()
+        {
+            return notificationMessage;
         }
 
         /*
