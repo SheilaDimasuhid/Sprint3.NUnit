@@ -11,7 +11,7 @@ namespace MarsFramework.Test
     //[TestFixture(BrowserType.Firefox)]
     [TestFixture(BrowserType.Chrome)]
     [Parallelizable(ParallelScope.Fixtures)]
-    [Category("Sprint3")]
+    [Category("Profile Earn Target")]
 
     public class Profile_EarnTarget : Base
     {

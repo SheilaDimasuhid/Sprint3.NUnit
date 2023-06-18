@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 
 
-namespace MarsFramework.Test
+namespace MarsFramework
 {
     //[TestFixture(BrowserType.Firefox)]
     [TestFixture(BrowserType.Chrome)]

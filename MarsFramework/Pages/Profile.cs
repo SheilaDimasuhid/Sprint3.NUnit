@@ -11,6 +11,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 using System.Reflection.Emit;
+using NUnit.Framework;
 
 namespace MarsFramework
 {
@@ -97,9 +98,9 @@ namespace MarsFramework
         [FindsBy(How = How.XPath, Using = "(//BUTTON[@class='ui teal button'][text()='Save'])[2]")]
         private IWebElement SaveDescription { get; set; }
         
-        //Current Profile Description
-        [FindsBy(How = How.XPath, Using = "(//SPAN)[16]")]
-        private IWebElement CurrentDescription { get; set; }
+        ////Current Profile Description
+        //[FindsBy(How = How.XPath, Using = "(//SPAN)[16]")]
+        //private IWebElement CurrentDescription { get; set; }
 
 
         //Click on Add new to add new Language
@@ -215,8 +216,14 @@ namespace MarsFramework
         private IWebElement Save { get; set; }
 
         //Display notification message
-        [FindsBy(How = How.XPath, Using = "//div[@class=\"ns-box-inner\"]")]
-        private IWebElement NotificationMsssage { get; set; }
+        //[FindsBy(How = How.XPath, Using = "//div[@class=\"ns-box-inner\"]")]
+        //private IWebElement NotificationMsssage { get; set; }
+
+        //Current Profile Description
+        IWebElement CurrentDescription => _driver.FindElement(By.XPath("(//SPAN)[16]"));
+
+        //DIV[@class='ns-box-inner'][text()='First character can only be digit or letters']
+        IWebElement NotificationMesssage => _driver.FindElement(By.XPath("//div[@class=\"ns-box-inner\"]"));
 
         private string notificationMessage;
 
@@ -316,7 +323,10 @@ namespace MarsFramework
             Thread.Sleep(1000);
             SaveDescription.Click();
 
-            notificationMessage = NotificationMsssage.Text;
+            Thread.Sleep(500);         
+            
+            notificationMessage = NotificationMesssage.Text;          
+            
         }
 
         public string GetDescriptionValue()

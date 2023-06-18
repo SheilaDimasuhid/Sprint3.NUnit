@@ -11,7 +11,7 @@ namespace MarsFramework.Test
     //[TestFixture(BrowserType.Firefox)]
     [TestFixture(BrowserType.Chrome)]
     [Parallelizable(ParallelScope.Fixtures)]
-    [Category("Sprint3")]
+    [Category("Profile Availability")]
     public class Profile_Availability : Base
     {
         public Profile_Availability(BrowserType browser) : base(browser)

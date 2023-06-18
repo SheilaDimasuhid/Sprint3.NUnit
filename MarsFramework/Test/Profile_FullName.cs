@@ -11,7 +11,7 @@ namespace MarsFramework.Test
     //[TestFixture(BrowserType.Firefox)]
     [TestFixture(BrowserType.Chrome)]
     [Parallelizable(ParallelScope.Fixtures)]
-    [Category("Sprint3")]
+    [Category("Profile FullName")]
     public class Profile_FullName : Base
     {
         public Profile_FullName(BrowserType browser) : base(browser)
